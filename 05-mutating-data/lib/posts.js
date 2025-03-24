@@ -89,11 +89,11 @@ export async function updatePostLikeStatus(postId, userId) {
       VALUES (?, ?)`);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     return stmt.run(userId, postId);
-  } else {
-    const stmt = db.prepare(`
-      DELETE FROM likes
-      WHERE user_id = ? AND post_id = ?`);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    return stmt.run(userId, postId);
   }
+  const newStmt = db.prepare(`
+    DELETE FROM likes
+    WHERE user_id = ? AND post_id = ?`);
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  return newStmt.run(userId, postId);
+  
 }
